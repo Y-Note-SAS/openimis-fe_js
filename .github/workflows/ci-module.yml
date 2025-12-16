@@ -27,6 +27,14 @@ jobs:
           repository: Y-Note-SAS/openimis-fe_js
           ref: feature-34644-fix
           path: openimis-fe_js
+
+      - name: Compute MODULE_NAME
+        run: |
+          MODULE_NAME=$(basename "${{ inputs.module-path }}" | sed 's/^openimis-fe-//; s/_js$//')
+          MODULE_PATH=${GITHUB_WORKSPACE}/${{ inputs.module-path }}
+          echo "MODULE_NAME=$MODULE_NAME" >> $GITHUB_ENV
+          echo "MODULE_PATH=$MODULE_PATH" >> $GITHUB_ENV
+
       - name: List files
         run: |
           echo "Contenu du workspace :"
@@ -37,29 +45,23 @@ jobs:
         with:
           node-version: 18
 
-      - name: Set MODULE_PATH env
-        run: echo "MODULE_PATH=${GITHUB_WORKSPACE}/${{ inputs.module-path }}" >> $GITHUB_ENV
-
       - name: Generate openimis.json
         run: node $GITHUB_WORKSPACE/openimis-fe_js/generate-openimis.json.js
 
       - name: Install dependencies
         run: |
-          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-//; s/_js$//')
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu du package.json :"
           yarn load-config
           cat package.json
           yarn install
-          cd $GITHUB_WORKSPACE/${{ inputs.module-path }}
+          cd $MODULE_PATH
           yarn link
           cd $GITHUB_WORKSPACE/openimis-fe_js
           yarn link @openimis/$MODULE_NAME
 
       - name: Run Jest tests for module
         run: |
-          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-//; s/_js$//')
-          echo "MODULE_NAME=$MODULE_NAME" >> $GITHUB_ENV
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu des tests :"
           ls -R $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
