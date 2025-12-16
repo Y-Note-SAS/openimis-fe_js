@@ -1,4 +1,4 @@
-name: Automated CI testing for modules
+name: CI Module Test
 
 on:
   workflow_call:
@@ -12,33 +12,44 @@ on:
 
 jobs:
   test-module:
-    name: Test ${{ inputs.repo }}
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
-      - name: Checkout module repository
+      # Checkout du module courant dans le dossier spécifié par module-path
+      - name: Checkout module
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.repo }}
-          path: current-module
-          fetch-depth: 0
+          path: ${{ inputs.module-path }}
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      # Checkout du front-end openimis-fe_js
+      - name: Checkout openimis-fe_js
+        uses: actions/checkout@v4
+
+      # Installer Node
+      - name: Node setup
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
-      - name: Install Yarn
-        run: npm install -g yarn
+      # Définir MODULE_PATH pour que tous les scripts Node le connaissent
+      - name: Set MODULE_PATH env
+        run: echo "MODULE_PATH=${GITHUB_WORKSPACE}/${{ inputs.module-path }}" >> $GITHUB_ENV
 
+      # Générer openimis.json dynamiquement
+      - name: Generate openimis.json
+        run: node generate-openimis.json.js
+
+      # Installer toutes les dépendances via yarn
       - name: Install dependencies
-        run: yarn install
-        working-directory: ${{ inputs.module-path }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          yarn load-config
+          yarn install
 
-      - name: Run tests
-        run: yarn test:ci
-        working-directory: ${{ inputs.module-path }}
+      # Calculer MODULE_NAME à partir de module-path et lancer les tests Jest
+      - name: Run Jest tests for module
+        run: |
+          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/_js$//')
+          cd $GITHUB_WORKSPACE
+          npx jest --testPathPattern="node_modules/@openimis/$MODULE_NAME/tests"

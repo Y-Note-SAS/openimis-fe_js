@@ -7,8 +7,8 @@ module.exports = {
     },
   
     transformIgnorePatterns: [
-      "node_modules/(?!(lodash-es)/)",
-    ],
+      "node_modules/(?!(lodash-es|@openimis/.*)/)",
+    ],    
   
     moduleNameMapper: {
       "\\.(css|scss|sass|less)$": "identity-obj-proxy",
