@@ -26,9 +26,9 @@ jobs:
       - name: Checkout openimis-fe_js
         uses: actions/checkout@v4
         with:
-          path: ./openimis-fe_js
-          repository: Y-Note-SAS/openimis-fe_js@feature-34644-fix
-
+          repository: Y-Note-SAS/openimis-fe_js
+          path: openimis-fe_js
+          ref: feature-34644-fix
       - name: Lister les fichiers
         run: |
           echo "Contenu du workspace :"
