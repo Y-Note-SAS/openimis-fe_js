@@ -27,8 +27,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Y-Note-SAS/openimis-fe_js
-          path: openimis-fe_js
           ref: feature-34644-fix
+          path: .
       - name: Lister les fichiers
         run: |
           echo "Contenu du workspace :"
@@ -46,11 +46,11 @@ jobs:
 
       # Générer openimis.json dynamiquement
       - name: Generate openimis.json
-        run: node $GITHUB_WORKSPACE/openimis-fe_js/generate-openimis.json.js
+        run: node $GITHUB_WORKSPACE/generate-openimis.json.js
       # Installer toutes les dépendances via yarn
       - name: Install dependencies
         run: |
-          cd $GITHUB_WORKSPACE/openimis-fe_js
+          cd $GITHUB_WORKSPACE
           echo "Contenu du package.json :"
           yarn load-config
           cat package.json
@@ -61,4 +61,4 @@ jobs:
         run: |
           MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/_js$//')
           cd $GITHUB_WORKSPACE
-          yarn jest --config=openimis-fe_js/jest.config.js openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
+          yarn jest node_modules/@openimis/$MODULE_NAME/tests
