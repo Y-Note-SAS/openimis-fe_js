@@ -38,8 +38,7 @@ jobs:
 
       # Générer openimis.json dynamiquement
       - name: Generate openimis.json
-        run: node generate-openimis.json.js
-
+        run: node $GITHUB_WORKSPACE/generate-openimis.json.js
       # Installer toutes les dépendances via yarn
       - name: Install dependencies
         run: |
