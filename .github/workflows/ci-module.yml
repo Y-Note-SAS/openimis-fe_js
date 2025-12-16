@@ -62,4 +62,4 @@ jobs:
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu des tests :"
           ls -R $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
-          yarn jest $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
+          yarn jest --config $GITHUB_WORKSPACE/openimis-fe_js/jest.config.js $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
