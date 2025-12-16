@@ -45,7 +45,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-fe-//; s/_js$//')
+          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-//; s/_js$//')
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu du package.json :"
           yarn load-config
