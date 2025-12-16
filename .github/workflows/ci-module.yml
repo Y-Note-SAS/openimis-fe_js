@@ -15,52 +15,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout du module courant dans le dossier spécifié par module-path
       - name: Checkout module
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.repo }}
           path: ${{ inputs.module-path }}
 
-      # Checkout du front-end openimis-fe_js
       - name: Checkout openimis-fe_js
         uses: actions/checkout@v4
         with:
           repository: Y-Note-SAS/openimis-fe_js
           ref: feature-34644-fix
           path: openimis-fe_js
-      - name: Lister les fichiers
+      - name: List files
         run: |
           echo "Contenu du workspace :"
           ls -R $GITHUB_WORKSPACE
 
-      # Installer Node
       - name: Node setup
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Définir MODULE_PATH pour que tous les scripts Node le connaissent
       - name: Set MODULE_PATH env
         run: echo "MODULE_PATH=${GITHUB_WORKSPACE}/${{ inputs.module-path }}" >> $GITHUB_ENV
 
-      # Générer openimis.json dynamiquement
       - name: Generate openimis.json
         run: node $GITHUB_WORKSPACE/openimis-fe_js/generate-openimis.json.js
-      # Installer toutes les dépendances via yarn
+
       - name: Install dependencies
         run: |
+          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-fe-//; s/_js$//')
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu du package.json :"
           yarn load-config
           cat package.json
           yarn install
+          cd $GITHUB_WORKSPACE/${{ inputs.module-path }}
+          yarn link
+          cd $GITHUB_WORKSPACE/openimis-fe_js
+          yarn link @openimis/$MODULE_NAME
 
-      # Calculer MODULE_NAME à partir de module-path et lancer les tests Jest
       - name: Run Jest tests for module
         run: |
-          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/_js$//')
+          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-fe-//; s/_js$//')
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu des tests :"
-          ls -R $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/
+          ls -R $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
           yarn jest $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
