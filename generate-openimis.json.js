@@ -55,7 +55,7 @@ if (moduleConfig.dependencies && Array.isArray(moduleConfig.dependencies)) {
 // Ajouter le module courant
 modulesToInclude.push({
     name: moduleConfig.moduleName.charAt(0).toUpperCase() + moduleConfig.moduleName.slice(1) + "Module",
-    npm: `@openimis/fe-${moduleConfig.moduleName}@https://github.com/${moduleConfig.repo}#${moduleConfig.branch}`
+    npm: `@openimis/${moduleConfig.moduleName}@https://github.com/${moduleConfig.repo}#${moduleConfig.branch}`
 });
 
 // Lire ou créer openimis.json
