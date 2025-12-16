@@ -61,4 +61,4 @@ jobs:
         run: |
           MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/_js$//')
           cd $GITHUB_WORKSPACE
-          npx jest --testPathPatterns="openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests"
+          npx jest --config=openimis-fe_js/jest.config.js --testPathPattern="openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests"
