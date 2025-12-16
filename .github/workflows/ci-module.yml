@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: ./openimis-fe_js
-          repository: ${{ github.repository }}
+          repository: Y-Note-SAS/openimis-fe_js@feature-34644-fix
 
       - name: Lister les fichiers
         run: |
