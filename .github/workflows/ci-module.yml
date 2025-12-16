@@ -58,7 +58,7 @@ jobs:
 
       - name: Run Jest tests for module
         run: |
-          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-fe-//; s/_js$//')
+          MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/^openimis-//; s/_js$//')
           echo "MODULE_NAME=$MODULE_NAME" >> $GITHUB_ENV
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu des tests :"
