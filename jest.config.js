@@ -10,9 +10,7 @@ module.exports = {
       "node_modules/(?!(lodash-es|@openimis/.*)/)",
     ],
 
-    testPathIgnorePatterns: [
-      "/node_modules/(?!(?:@openimis/.*)/)",
-    ],
+    testPathIgnorePatterns: [],
   
     moduleNameMapper: {
       "\\.(css|scss|sass|less)$": "identity-obj-proxy",
@@ -25,7 +23,9 @@ module.exports = {
   
     testMatch: [
       "**/tests/**/*.test.js",
-      "**/tests/**/*.test.jsx"
+      "**/tests/**/*.test.jsx",
+      "<rootDir>/node_modules/@openimis/*/tests/**/*.test.js",
+      "<rootDir>/node_modules/@openimis/*/tests/**/*.test.jsx",
     ],
   
     collectCoverage: true,
