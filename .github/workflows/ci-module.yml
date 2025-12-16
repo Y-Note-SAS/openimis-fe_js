@@ -25,6 +25,14 @@ jobs:
       # Checkout du front-end openimis-fe_js
       - name: Checkout openimis-fe_js
         uses: actions/checkout@v4
+        with:
+          path: .
+          repository: ${{ github.repository }}
+
+      - name: Lister les fichiers
+        run: |
+          echo "Contenu du workspace :"
+          ls -R $GITHUB_WORKSPACE
 
       # Installer Node
       - name: Node setup
