@@ -1,4 +1,5 @@
 const moduleName = process.env.MODULE_NAME;
+console.log(moduleName);
 
 module.exports = {
     verbose: true,
