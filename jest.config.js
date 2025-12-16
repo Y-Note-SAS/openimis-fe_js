@@ -1,3 +1,5 @@
+const moduleName = process.env.MODULE_NAME;
+
 module.exports = {
     verbose: true,
     moduleFileExtensions: ["js", "jsx", "json"],
@@ -24,8 +26,13 @@ module.exports = {
     testMatch: [
       "**/tests/**/*.test.js",
       "**/tests/**/*.test.jsx",
-      "<rootDir>/node_modules/@openimis/*/tests/**/*.test.js",
-      "<rootDir>/node_modules/@openimis/*/tests/**/*.test.jsx",
+  
+      ...(moduleName
+        ? [
+            `<rootDir>/node_modules/@openimis/${moduleName}/tests/**/*.test.js`,
+            `<rootDir>/node_modules/@openimis/${moduleName}/tests/**/*.test.jsx`,
+          ]
+        : []),
     ],
   
     collectCoverage: true,
