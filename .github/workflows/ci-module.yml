@@ -51,6 +51,8 @@ jobs:
       - name: Install dependencies
         run: |
           cd $GITHUB_WORKSPACE/openimis-fe_js
+          echo "Contenu du package.json :"
+          cat package.json
           yarn load-config
           yarn install
 
@@ -59,4 +61,4 @@ jobs:
         run: |
           MODULE_NAME=$(basename ${{ inputs.module-path }} | sed 's/_js$//')
           cd $GITHUB_WORKSPACE
-          npx jest --testPathPattern="node_modules/@openimis/$MODULE_NAME/tests"
+          npx jest --testPathPatterns="node_modules/@openimis/$MODULE_NAME/tests"
