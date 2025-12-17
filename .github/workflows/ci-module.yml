@@ -65,5 +65,5 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu des tests :"
-          ls -R $GITHUB_WORKSPACE/openimis-fe_j/tests
+          ls -R $GITHUB_WORKSPACE/openimis-fe_js/tests
           yarn jest --coverage
