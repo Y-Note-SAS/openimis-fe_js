@@ -58,6 +58,8 @@ jobs:
           cd $MODULE_PATH
           yarn link
           cp -v tests/* $GITHUB_WORKSPACE/openimis-fe_js/tests/
+          rsync -v --exclude='index.js' ./src/ "$GITHUB_WORKSPACE/openimis-fe_js/src/"
+          ls -R $GITHUB_WORKSPACE/openimis-fe_js/src/
           cd $GITHUB_WORKSPACE/openimis-fe_js
           yarn link @openimis/$MODULE_NAME
 
