@@ -7,6 +7,7 @@ module.exports = {
   
     transform: {
       "^.+\\.[jt]sx?$": "babel-jest",
+      "^.+\\.jsx?$": "babel-jest"
     },
   
     transformIgnorePatterns: [
