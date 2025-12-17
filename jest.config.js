@@ -17,7 +17,8 @@ module.exports = {
   
     moduleNameMapper: {
       "\\.(css|scss|sass|less)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/tests/mocks/fileMock.js"
+      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/tests/mocks/fileMock.js",
+      "^@openimis/(.*)$": "<rootDir>/node_modules/@openimis/$1/src"
     },
   
     testEnvironment: "jsdom",
