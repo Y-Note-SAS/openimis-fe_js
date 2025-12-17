@@ -30,7 +30,7 @@ jobs:
 
       - name: Compute MODULE_NAME
         run: |
-          MODULE_NAME=$(basename "${{ inputs.module-path }}" | sed 's/^openimis-fe-//; s/_js$//')
+          MODULE_NAME=$(basename "${{ inputs.module-path }}" | sed 's/^openimis-//; s/_js$//')
           MODULE_PATH=${GITHUB_WORKSPACE}/${{ inputs.module-path }}
           echo "MODULE_NAME=$MODULE_NAME" >> $GITHUB_ENV
           echo "MODULE_PATH=$MODULE_PATH" >> $GITHUB_ENV
