@@ -9,6 +9,11 @@ module.exports = {
       "^.+\\.[jt]sx?$": "babel-jest",
       "^.+\\.jsx?$": "babel-jest"
     },
+
+    modulePaths: [
+      '<rootDir>/node_modules/@openimis',
+      '<rootDir>/../../node_modules/@openimis',  // root-level deps
+    ],
   
     transformIgnorePatterns: [
       "node_modules/(?!(lodash-es|@openimis/.*)/)",
