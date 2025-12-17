@@ -57,6 +57,7 @@ jobs:
           yarn install
           cd $MODULE_PATH
           yarn link
+          cp tests $GITHUB_WORKSPACE/openimis-fe_js/tests
           cd $GITHUB_WORKSPACE/openimis-fe_js
           yarn link @openimis/$MODULE_NAME
 
@@ -64,5 +65,5 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/openimis-fe_js
           echo "Contenu des tests :"
-          ls -R $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
-          yarn jest --config $GITHUB_WORKSPACE/openimis-fe_js/jest.config.js $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests
+          ls -R $GITHUB_WORKSPACE/openimis-fe_j/tests
+          yarn jest --coverage
