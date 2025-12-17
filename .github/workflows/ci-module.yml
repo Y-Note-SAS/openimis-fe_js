@@ -57,7 +57,7 @@ jobs:
           yarn install
           cd $MODULE_PATH
           yarn link
-          cp tests $GITHUB_WORKSPACE/openimis-fe_js/tests
+          cp -v tests/* $GITHUB_WORKSPACE/openimis-fe_js/tests/
           cd $GITHUB_WORKSPACE/openimis-fe_js
           yarn link @openimis/$MODULE_NAME
 
