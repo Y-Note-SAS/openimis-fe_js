@@ -51,18 +51,24 @@ jobs:
       - name: Install dependencies
         run: |
           cd $GITHUB_WORKSPACE/openimis-fe_js
-          yarn load-config
           echo "Contenu du package.json :"
+          yarn load-config
           cat package.json
-          cat ./src/modules.js
+          cat /src/modules.js
           yarn install
           cd $MODULE_PATH
+          yarn install
           yarn link
+          cp -v tests/* $GITHUB_WORKSPACE/openimis-fe_js/tests/
+          shopt -s extglob
+          cp -vr ./src/!(index.js)* "$GITHUB_WORKSPACE/openimis-fe_js/src/"
+          ls -R $GITHUB_WORKSPACE/openimis-fe_js/src/
           cd $GITHUB_WORKSPACE/openimis-fe_js
           yarn link @openimis/$MODULE_NAME
 
       - name: Run Jest tests for module
         run: |
           cd $GITHUB_WORKSPACE/openimis-fe_js
-          ls -R $GITHUB_WORKSPACE/openimis-fe_js/node_modules/@openimis/$MODULE_NAME/tests/
+          echo "Contenu des tests :"
+          ls -R $GITHUB_WORKSPACE/openimis-fe_js/tests
           yarn jest --coverage
