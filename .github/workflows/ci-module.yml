@@ -54,7 +54,7 @@ jobs:
           echo "Contenu du package.json :"
           yarn load-config
           cat package.json
-          cat /src/modules.js
+          cat ./src/modules.js
           yarn install
           cd $MODULE_PATH
           yarn install
